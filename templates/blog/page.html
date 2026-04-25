@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — {{ config.title }}{% endblock title %}
+{% block description %}{% if page.description %}{{ page.description }}{% else %}{{ config.description }}{% endif %}{% endblock description %}
+
+{% block content %}
+<article class="prose">
+  <header class="post-header">
+    <div class="post-header-meta">
+      <a href="/blog" class="back-link">← Blog</a>
+      <div class="post-header-info">
+        <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+        {% if page.reading_time %}
+        <span class="reading-time">· {{ page.reading_time }} min read</span>
+        {% endif %}
+      </div>
+    </div>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+    {% if page.taxonomies.tags %}
+    <div class="tag-list">
+      {% for tag in page.taxonomies.tags %}
+      <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="prose-content">
+    {{ page.content | safe }}
+  </div>
+</article>
+{% endblock content %}

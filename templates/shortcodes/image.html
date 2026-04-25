@@ -1,0 +1,2 @@
+{% set img = resize_image(path=path, width=900, op="fit_width") %}
+<img src="{{ img.url }}" alt="{{ alt | default(value='') }}" loading="lazy">

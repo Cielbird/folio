@@ -1,0 +1,7 @@
+name = "folio"
+description = "Minimal retro theme with a warm paper aesthetic"
+homepage = "https://cielbird.github.io"
+min_version = "0.17.0"
+license = "MIT"
+
+[extra]

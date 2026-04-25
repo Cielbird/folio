@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}#{{ term.name }} — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <a href="/tags" class="back-link">← All Tags</a>
+  <h1><span class="tag-prefix">#</span>{{ term.name }}</h1>
+</div>
+
+<div class="post-list">
+  {% for page in term.pages %}
+  <article class="post-card">
+    <div class="post-card-meta">
+      {% if page.date %}
+      <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format="%b %d, %Y") }}</time>
+      {% endif %}
+      {% if page.taxonomies.tags %}
+      <div class="tag-list">
+        {% for tag in page.taxonomies.tags %}
+        <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag {% if tag == term.name %}tag-active{% endif %}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+  </article>
+  {% endfor %}
+</div>
+{% endblock content %}

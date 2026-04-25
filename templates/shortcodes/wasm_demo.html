@@ -1,0 +1,17 @@
+<div class="wasm-demo-container">
+  <div class="wasm-demo-header">
+    <span class="wasm-badge">WASM</span>
+    {% if title %}<span>{{ title }}</span>{% endif %}
+    {% if fullscreen %}<a href="{{ src }}" target="_blank" rel="noopener" class="wasm-fullscreen">Open fullscreen ↗</a>{% endif %}
+  </div>
+  <iframe
+    src="{{ src }}"
+    width="100%"
+    height="{{ height | default(value=500) }}"
+    class="wasm-iframe"
+    title="{% if title %}{{ title }}{% else %}WASM Demo{% endif %}"
+    loading="lazy"
+    allow="fullscreen"
+    frameborder="0"
+  ></iframe>
+</div>

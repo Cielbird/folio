@@ -1,0 +1,8 @@
+<figure class="media-figure">
+  <video
+    src="{{ src }}"
+    {% if autoplay %}autoplay muted loop playsinline{% else %}controls preload="metadata"{% endif %}
+    class="prose-video"
+  ></video>
+  {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+</figure>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}blog — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<h1 class="page-title">blog</h1>
+
+{% set seen = [] %}
+{% for page in section.pages %}{% if page.taxonomies.tags %}{% for tag in page.taxonomies.tags %}{% if tag not in seen %}{% set_global seen = seen | concat(with=[tag]) %}{% endif %}{% endfor %}{% endif %}{% endfor %}
+
+{% if seen %}
+<div class="filter-bar" id="tag-filter">
+  <button class="filter-btn active" data-tag="all">all</button>
+  {% for tag in seen %}
+  <button class="filter-btn" data-tag="{{ tag }}">{{ tag }}</button>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="post-list" id="post-list">
+  {% for page in section.pages %}
+  <article class="post-card filterable" data-tags="{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=' ') }}{% endif %}">
+    <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+    <div class="post-card-meta">
+      <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format="%b %d, %Y") }}</time>
+      {% if page.reading_time %}<span>· {{ page.reading_time }} min</span>{% endif %}
+      {% if page.taxonomies.tags %}
+      <div class="tag-list">
+        {% for tag in page.taxonomies.tags %}
+        <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </article>
+  {% else %}
+  <p class="empty-state">No posts yet.</p>
+  {% endfor %}
+</div>
+{% endblock content %}

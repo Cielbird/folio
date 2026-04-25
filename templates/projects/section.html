@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}projects — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<h1 class="page-title">projects</h1>
+
+{% set seen = [] %}
+{% for page in section.pages %}{% if page.taxonomies.tags %}{% for tag in page.taxonomies.tags %}{% if tag not in seen %}{% set_global seen = seen | concat(with=[tag]) %}{% endif %}{% endfor %}{% endif %}{% endfor %}
+
+{% if seen %}
+<div class="filter-bar" id="tag-filter">
+  <button class="filter-btn active" data-tag="all">all</button>
+  {% for tag in seen %}
+  <button class="filter-btn" data-tag="{{ tag }}">{{ tag }}</button>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="project-grid" id="project-grid">
+  {% for page in section.pages %}
+  <article class="project-card filterable" data-tags="{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=' ') }}{% endif %}">
+    {% if page.extra.image %}
+    <a href="{{ page.permalink | safe }}" class="project-media">
+      <img src="{{ page.path | safe }}{{ page.extra.image }}" alt="{{ page.title }}" loading="lazy">
+    </a>
+    {% elif page.extra.video %}
+    <a href="{{ page.permalink | safe }}" class="project-media project-media--video">
+      <video src="{{ page.path | safe }}{{ page.extra.video }}" muted loop playsinline preload="metadata"></video>
+    </a>
+    {% elif page.extra.wasm_demo %}
+    <a href="{{ page.permalink | safe }}" class="project-media project-media--wasm">
+      <span class="wasm-badge">WASM</span>
+    </a>
+    {% endif %}
+    <div class="project-card-body">
+      <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+      {% if page.description and not page.extra.image and not page.extra.video and not page.extra.wasm_demo %}
+      <p>{{ page.description }}</p>
+      {% endif %}
+      <div class="project-card-meta">
+        {% if page.taxonomies.tags %}
+        <div class="tag-list">
+          {% for tag in page.taxonomies.tags %}
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="project-links">
+          {% if page.extra.github %}
+          <a href="{{ page.extra.github | safe }}" class="project-link project-link--gh" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub
+          </a>
+          {% endif %}
+          {% if page.extra.youtube %}
+          <a href="{{ page.extra.youtube | safe }}" class="project-link project-link--yt" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube
+          </a>
+          {% endif %}
+          {% if page.extra.link %}
+          <a href="{{ page.extra.link | safe }}" class="project-link project-link--ext" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Link
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </article>
+  {% else %}
+  <p class="empty-state">No projects yet.</p>
+  {% endfor %}
+</div>
+{% endblock content %}
