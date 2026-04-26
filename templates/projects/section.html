@@ -28,10 +28,6 @@
     <a href="{{ page.permalink | safe }}" class="project-media project-media--video">
       <video src="{{ page.path | safe }}{{ page.extra.video }}" muted loop playsinline preload="metadata"></video>
     </a>
-    {% elif page.extra.wasm_demo %}
-    <a href="{{ page.permalink | safe }}" class="project-media project-media--wasm">
-      <span class="wasm-badge">WASM</span>
-    </a>
     {% endif %}
     <div class="project-card-body">
       <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>

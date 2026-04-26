@@ -57,16 +57,7 @@ endblock description %}
     {% endif %}
   </header>
 
-  {% if page.extra.wasm_demo %}
-  <div class="wasm-demo-container">
-    <div class="wasm-demo-header">
-      <span class="wasm-badge">WASM</span>
-      <span>Interactive Demo</span>
-    </div>
-    <iframe src="{{ page.extra.wasm_demo | safe }}" class="wasm-iframe" title="{{ page.title }} demo" loading="lazy"
-      allow="fullscreen"></iframe>
-  </div>
-  {% elif page.extra.video %}
+  {% if page.extra.video %}
   <div class="project-hero-media">
     <video src="{{ page.path | safe }}{{ page.extra.video }}" controls loop preload="metadata"
       class="project-video"></video>
