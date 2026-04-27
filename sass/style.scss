@@ -756,7 +756,7 @@ video {
     }
 
     tr:nth-child(even) td {
-      background: var(--surface);
+      background: color-mix(in srgb, var(--surface) 40%, var(--bg));
     }
   }
 
