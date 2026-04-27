@@ -60,10 +60,12 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <span>© {{ now() | date(format="%Y") }} {{ config.extra.author }}</span>
-    {% if config.extra.github %}
-    <a href="{{ config.extra.github | safe }}" target="_blank" rel="noopener noreferrer">GitHub</a>
-    {% endif %}
+    <span>·</span>
     <a href="{{ get_url(path='atom.xml') | safe }}">RSS</a>
+    {% if config.extra.email %}
+    <span>·</span>
+    <span>Feel free to reach out: <a href="mailto:{{ config.extra.email }}">{{ config.extra.email }}</a></span>
+    {% endif %}
   </div>
 </footer>
 
