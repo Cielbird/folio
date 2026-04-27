@@ -16,6 +16,25 @@ if (themeBtn) {
   });
 }
 
+// ── Mobile nav ────────────────────────────────────────────
+const navToggle = document.getElementById('nav-toggle');
+const navLinks  = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+
+  // close when a link is tapped
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 // ── Tag filter ────────────────────────────────────────────
 const filterBar = document.getElementById('tag-filter');
 const postList  = document.getElementById('post-list') || document.getElementById('project-grid');
