@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="{{ get_url(path='style.css') | safe }}">
   <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ get_url(path='atom.xml') | safe }}">
   {% block extra_head %}{% endblock extra_head %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body>
 
@@ -67,6 +68,14 @@
 </footer>
 
 <script src="{{ get_url(path='js/main.js') | safe }}"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ]
+  });"></script>
 {% block extra_js %}{% endblock extra_js %}
 </body>
 </html>
